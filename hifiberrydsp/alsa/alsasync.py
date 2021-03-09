@@ -104,7 +104,7 @@ class AlsaSync(Thread):
                 logging.error(
                     "can't create ALSA mixer control %s (%s)",
                     alsa_control, e)
-            return False
+                return False
 
         if self.mixer == None:
             logging.error("ALSA mixer %s not found", alsa_control)
