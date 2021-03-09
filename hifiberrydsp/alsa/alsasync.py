@@ -92,7 +92,7 @@ class AlsaSync(Thread):
     def set_alsa_control(self, alsa_control):
         from alsaaudio import Mixer
         try:
-            self.mixer = Mixer(alsa_control)
+            self.mixer = Mixer(alsa_control, device='hw:sndrpihifiberry')
             logging.debug("using existing ALSA control %s", alsa_control)
         except:
             try:
@@ -147,7 +147,7 @@ class AlsaSync(Thread):
 
     def read_alsa_data(self):
         from alsaaudio import Mixer
-        volumes = Mixer(self.mixername).getvolume()
+        volumes = Mixer(self.mixername, device='hw:sndrpihifiberry').getvolume()
         channels = 0
         vol = 0
         for i in range(len(volumes)):
@@ -253,8 +253,8 @@ class AlsaSync(Thread):
         
         try:
             from alsaaudio import Mixer, mixers
-            logging.info("mixers: ", mixers())
-            return Mixer(name)
+            logging.info("mixers: ", mixers(device='hw:sndrpihifiberry'))
+            return Mixer(name, device='hw:sndrpihifiberry')
         except:
             from alsaaudio import cards, ALSAAudioError
             raise ALSAAudioError("Mixer {} not found (cards: {})".format(name, cards()))
